@@ -1,9 +1,9 @@
 import glob from "fast-glob";
-import { Context } from "../context";
-import { Plugin } from "../plugin";
-import * as Node from "../node";
 import * as fs from "fs-extra";
 import * as path from "path";
+import { Context } from "../context";
+import * as Node from "../node";
+import { Plugin } from "../plugin";
 import { timer } from "../timer";
 
 const log = require("debug")("tatao:plugin:source");
@@ -11,7 +11,7 @@ const time = timer("source");
 
 export function source(inputDirectory: string, globs: string[]): Plugin {
   return function(context: Context) {
-    inputDirectory = path.join(process.cwd(), inputDirectory);
+    inputDirectory = path.join(context.cwd, inputDirectory);
     globs = globs.map(glob => path.join(inputDirectory, glob));
 
     return time.auto(

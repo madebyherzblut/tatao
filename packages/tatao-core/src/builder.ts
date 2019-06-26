@@ -1,20 +1,29 @@
+import * as marky from "marky";
 import { Context } from "./context";
 import { Plugin } from "./plugin";
-import * as marky from "marky";
 
-export class Pipeline {
-  plugins: Plugin[] = [];
+export interface BuilderOptions {
+  cwd: string;
+}
+
+export class Builder {
+  _context: Context;
+  _plugins: Plugin[] = [];
+
+  constructor(options: BuilderOptions) {
+    this._context = new Context(options.cwd);
+  }
 
   use(plugin: Plugin) {
-    this.plugins.push(plugin);
+    this._plugins.push(plugin);
     return this;
   }
 
-  run(context: Context) {
-    return this.plugins
+  run() {
+    return this._plugins
       .reduce(
         (pipeline, plugin) => pipeline.then(plugin),
-        Promise.resolve(context)
+        Promise.resolve(this._context)
       )
       .then(() => {
         const summary = marky.getEntries().reduce(
