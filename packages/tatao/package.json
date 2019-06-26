@@ -8,6 +8,7 @@
     "build:watch": "tsc-watch"
   },
   "dependencies": {
+    "debug": "^4.1.1",
     "fast-glob": "^3.0.1",
     "fs-extra": "^8.0.1",
     "immutable": "^4.0.0-rc.12",

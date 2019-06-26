@@ -5,6 +5,8 @@ import * as Node from "../node";
 import * as fs from "fs-extra";
 import * as path from "path";
 
+const log = require("debug")("tatao:plugin:source");
+
 export function source(inputDirectory: string, globs: string[]): Plugin {
   return function(context: Context) {
     inputDirectory = path.join(process.cwd(), inputDirectory);
@@ -15,6 +17,7 @@ export function source(inputDirectory: string, globs: string[]): Plugin {
         Promise.all(
           files.map(file => {
             const id = file.replace(inputDirectory, "");
+            log("Read file '%s'", id);
             return Promise.all([fs.readFile(file), stat(file)]).then(
               ([contents, stats]) => createNode(id, file, contents, stats)
             );
