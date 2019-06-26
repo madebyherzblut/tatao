@@ -4,36 +4,41 @@ import { Plugin } from "../plugin";
 import * as Node from "../node";
 import * as fs from "fs-extra";
 import * as path from "path";
+import { timer } from "../timer";
 
 const log = require("debug")("tatao:plugin:source");
+const time = timer("source");
 
 export function source(inputDirectory: string, globs: string[]): Plugin {
   return function(context: Context) {
     inputDirectory = path.join(process.cwd(), inputDirectory);
     globs = globs.map(glob => path.join(inputDirectory, glob));
 
-    return glob(globs)
-      .then(files =>
-        Promise.all(
-          files.map(file => {
-            const id = file.replace(inputDirectory, "");
-            log("Read file '%s'", id);
-            return Promise.all([fs.readFile(file), stat(file)]).then(
-              ([contents, stats]) => createNode(id, file, contents, stats)
-            );
-          })
+    return time.auto(
+      "read",
+      glob(globs)
+        .then(files =>
+          Promise.all(
+            files.map(file => {
+              const id = file.replace(inputDirectory, "");
+              log("Read file '%s'", id);
+              return Promise.all([fs.readFile(file), stat(file)]).then(
+                ([contents, stats]) => createNode(id, file, contents, stats)
+              );
+            })
+          )
         )
-      )
-      .then(files => {
-        context.nodes = files.reduce(
-          (coll, node) => {
-            coll[node.id] = node;
-            return coll;
-          },
-          {} as any
-        );
-        return context;
-      });
+        .then(files => {
+          context.nodes = files.reduce(
+            (coll, node) => {
+              coll[node.id] = node;
+              return coll;
+            },
+            {} as any
+          );
+          return context;
+        })
+    );
   };
 }
 

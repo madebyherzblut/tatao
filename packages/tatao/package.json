@@ -12,7 +12,8 @@
     "fast-glob": "^3.0.1",
     "fs-extra": "^8.0.1",
     "immutable": "^4.0.0-rc.12",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "marky": "^1.2.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^7.0.0",
