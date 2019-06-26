@@ -1,7 +1,7 @@
-import { Plugin, Context, Node, timer } from "@tatao/core";
+import { Plugin, Context, Node, timer, logger } from "@tatao/core";
 import transform from "@mdx-js/mdx";
 
-const log = require("debug")("tatao:plugin:mdx");
+const log = logger("plugin:mdx");
 const time = timer("mdx");
 
 export interface Options {}
