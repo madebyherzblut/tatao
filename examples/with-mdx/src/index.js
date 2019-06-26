@@ -1,12 +1,7 @@
 const { Builder, source, write, clean } = require("@tatao/core");
 const { mdx } = require("@tatao/plugin-mdx");
-const path = require("path");
 
-const builder = new Builder({
-  cwd: path.join(__dirname, "..")
-});
-
-builder
+new Builder()
   .use(clean(["./public"]))
   .use(source("./src/content/", ["/**"]))
   .use(mdx())

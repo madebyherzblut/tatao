@@ -10,21 +10,19 @@
 
 
 ```javascript
-import { Context, Pipeline, source, write } from "@tatao/core";
+import { Builder, source, write, clean } from "@tatao/core";
 import { mdx } from "@tatao/plugin-mdx";
 import { react } from "@tatao/plugin-react";
 import { layout } from "@tatao/plugin-layout";
 import { ejs } from "@tatao/plugin-ejs";
 
-const context = new Context();
-const pipeline = new Pipeline();
-
-pipeline
+new Builder()
+  .use(clean(["./public"]))
   .use(source("./src/pages/", ["/**"]))
   .use(mdx())
   .use(react())
   .use(layout("./src/layouts", "ejs"))
   .use(ejs())
   .use(write("./public"))
-  .run(context);
+  .run();
 ```

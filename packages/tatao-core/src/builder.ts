@@ -3,15 +3,15 @@ import { Context } from "./context";
 import { Plugin } from "./plugin";
 
 export interface BuilderOptions {
-  cwd: string;
+  cwd?: string;
 }
 
 export class Builder {
   _context: Context;
   _plugins: Plugin[] = [];
 
-  constructor(options: BuilderOptions) {
-    this._context = new Context(options.cwd);
+  constructor(options: BuilderOptions = {}) {
+    this._context = new Context(options.cwd || process.cwd());
   }
 
   use(plugin: Plugin) {
