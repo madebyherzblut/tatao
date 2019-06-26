@@ -1,11 +1,13 @@
 {
+  "name": "tatao-workspace",
   "private": true,
   "bugs": "https://github.com/madebyherzblut/tatao/issues",
   "homepage": "https://github.com/madebyherzblut/tatao#readme",
   "scripts": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "lerna": "^3.15.0"
+  },
   "workspaces": [
-    "packages/tatao",
-    "packages/tatao-plugin-mdx"
+    "packages/*"
   ]
 }
