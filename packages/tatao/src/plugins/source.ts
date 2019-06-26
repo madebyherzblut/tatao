@@ -28,7 +28,7 @@ export function source(inputDirectory: string, globs: string[]): Plugin {
         context.nodes = files.reduce(
           (coll, node) => {
             coll[node.id] = node;
-            return node;
+            return coll;
           },
           {} as any
         );
