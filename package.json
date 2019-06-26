@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "bugs": "https://github.com/madebyherzblut/tatao/issues",
+  "homepage": "https://github.com/madebyherzblut/tatao#readme",
+  "scripts": {},
+  "devDependencies": {},
+  "workspaces": [
+    "packages/tatao",
+    "packages/tatao-plugin-mdx"
+  ]
+}
