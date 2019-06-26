@@ -1,0 +1,14 @@
+{
+  "name": "tatao-examples-with-mdx",
+  "version": "1.0.0",
+  "description": "Example using MDX in tatao",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "node src/index.js"
+  },
+  "dependencies": {
+    "@tatao/core": "^0.1.0",
+    "@tatao/plugin-mdx": "^0.1.0"
+  }
+}

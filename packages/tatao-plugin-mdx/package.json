@@ -1,0 +1,19 @@
+{
+  "name": "@tatao/plugin-mdx",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "rimraf ./lib && tsc",
+    "build:watch": "tsc-watch"
+  },
+  "dependencies": {
+    "@mdx-js/mdx": "^1.0.21",
+    "@tatao/core": "^0.1.0",
+    "debug": "^4.1.1"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.3",
+    "typescript": "^3.5.2"
+  }
+}
