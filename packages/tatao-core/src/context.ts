@@ -1,9 +1,10 @@
 import { Node } from "./node";
 
 export class Context {
-  cwd: string;
   config = {};
+  cwd: string;
   nodes: { [id: string]: Node } = {};
+  [key: string]: any;
 
   constructor(cwd: string) {
     this.cwd = cwd;

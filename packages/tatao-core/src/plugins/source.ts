@@ -52,7 +52,13 @@ function createNode(
     date: new Date(stats.mtime)
   };
 
-  return Node.create({ id, source: file, target: id, contents, ...props });
+  return Node.create({
+    id,
+    source: file,
+    target: id,
+    contents: contents.toString(),
+    ...props
+  });
 }
 
 function stat(path: string): Promise<fs.Stats> {

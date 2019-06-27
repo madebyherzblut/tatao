@@ -2,7 +2,7 @@ import { Plugin, Context, Node, timer, logger } from "@tatao/core";
 import transform from "@mdx-js/mdx";
 
 const log = logger("plugin:mdx");
-const time = timer("mdx");
+const time = timer("plugin:mdx");
 
 export interface Options {}
 
@@ -18,7 +18,7 @@ export function mdx(_options: Options): Plugin {
       return time.auto<Node>(
         node.id,
         transform(node.contents).then((jsx: string) => {
-          node.contents = Buffer.from(jsx);
+          node.contents = jsx;
           node.target = node.target
             ? node.target.replace(".mdx", ".jsx")
             : node.target;

@@ -4,7 +4,7 @@ export interface Node {
   id: string;
   source?: string;
   target?: string;
-  contents?: Buffer;
+  contents?: string;
   [key: string]: any;
 }
 
