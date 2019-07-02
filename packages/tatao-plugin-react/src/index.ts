@@ -43,6 +43,7 @@ export function react(): Plugin {
             const html = ReactDOMServer.renderToStaticMarkup(element);
 
             node.contents = html;
+            node.target = node.target!.replace("jsx", "html");
             resolve(node);
           });
         })
