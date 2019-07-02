@@ -1,5 +1,6 @@
-import { transform } from "@babel/core";
+import { transform, transformSync } from "@babel/core";
 import { Context, logger, Node, Plugin, timer } from "@tatao/core";
+import { addHook } from "pirates";
 import * as React from "react";
 import * as ReactDOMServer from "react-dom/server";
 import requireFromString from "require-from-string";
@@ -22,6 +23,14 @@ export function react(): Plugin {
     ]
   };
 
+  addHook(
+    code => {
+      const result = transformSync(code, babelOptions);
+      return result ? result.code! : code;
+    },
+    { exts: [".jsx"] }
+  );
+
   return function(context: Context): Promise<Context> {
     const transformers = Object.values(context.nodes).map(node => {
       if (!node.contents) {
@@ -38,7 +47,7 @@ export function react(): Plugin {
               return reject(err);
             }
 
-            const mod = requireFromString(result!.code!);
+            const mod = requireFromString(result!.code!, node.source);
             const element = React.createElement(mod.default, {});
             const html = ReactDOMServer.renderToStaticMarkup(element);
 
