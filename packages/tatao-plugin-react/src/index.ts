@@ -1,5 +1,5 @@
 import { transform, transformSync } from "@babel/core";
-import { Context, logger, Node, Plugin, timer } from "@tatao/core";
+import { Context, logger, Node, Nodes, Plugin, timer } from "@tatao/core";
 import { addHook } from "pirates";
 import * as React from "react";
 import * as ReactDOMServer from "react-dom/server";
@@ -52,7 +52,7 @@ export function react(): Plugin {
             const html = ReactDOMServer.renderToStaticMarkup(element);
 
             node.contents = html;
-            node.target = node.target!.replace("jsx", "html");
+            Nodes.target(node, { ext: "html" });
             resolve(node);
           });
         })

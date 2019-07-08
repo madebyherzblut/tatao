@@ -10,7 +10,7 @@ const log = require("debug")("tatao:plugin:write");
 export function write(outputDir: string): Plugin {
   return function(context: Context) {
     const writers = Object.values(context.nodes).map((node: Node) => {
-      if (isEmpty(node.contents) || isEmpty(node.target)) {
+      if (!node.target || isEmpty(node.contents) || isEmpty(node.target)) {
         log(
           "Skipping '%s' because either its contents or target is empty",
           node.id
@@ -20,7 +20,12 @@ export function write(outputDir: string): Plugin {
 
       log("Write '%s' to '%s'", node.id, node.target);
 
-      const outputPath = path.join(outputDir, node.target!);
+      const outputPath = path.join(
+        outputDir,
+        node.target.dirname,
+        `${node.target.basename}.${node.target.ext}`
+      );
+
       return fs.outputFile(outputPath, node.contents);
     });
 
