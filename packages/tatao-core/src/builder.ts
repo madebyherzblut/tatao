@@ -20,21 +20,16 @@ export class Builder {
   }
 
   run() {
+    marky.mark("tatao:build");
+
     return this._plugins
       .reduce(
         (pipeline, plugin) => pipeline.then(plugin),
         Promise.resolve(this._context)
       )
       .then(() => {
-        const summary = marky.getEntries().reduce(
-          (sum, entry) => {
-            sum.total += entry.duration;
-            return sum;
-          },
-          { total: 0 }
-        );
-
-        console.log("Build time: %ds", (summary.total / 1000).toFixed(2));
+        const marker = marky.stop("tatao:build");
+        console.log("Build time: %ds", (marker.duration / 1000).toFixed(2));
       });
   }
 }
