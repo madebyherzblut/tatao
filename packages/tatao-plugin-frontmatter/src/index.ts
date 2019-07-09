@@ -12,7 +12,7 @@ export function frontmatter(): Plugin {
         return Promise.resolve(node);
       }
 
-      log("Transform '%s'", node.id);
+      log("Extract data from '%s'", node.id);
 
       return time.auto<Node>(
         node.id,
