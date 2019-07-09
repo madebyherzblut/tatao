@@ -3,7 +3,6 @@ import merge from "lodash/merge";
 export interface Node {
   id: string;
   source?: string;
-  extensions: string[];
   target?: {
     dirname: string;
     basename: string;
@@ -18,7 +17,6 @@ export function create(props: Partial<Node>): Node {
     {
       id: "node",
       source: undefined,
-      extensions: [],
       target: undefined,
       contents: undefined
     },

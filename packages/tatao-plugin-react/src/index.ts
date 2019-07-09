@@ -33,7 +33,7 @@ export function react(): Plugin {
 
   return function(context: Context): Promise<Context> {
     const transformers = Object.values(context.nodes).map(node => {
-      if (!node.contents) {
+      if (!node.contents || !node.target || !node.target.ext.includes("jsx")) {
         return Promise.resolve(node);
       }
 
@@ -60,14 +60,7 @@ export function react(): Plugin {
     });
 
     return Promise.all(transformers).then(nodes => {
-      context.nodes = nodes.reduce(
-        (coll, node) => {
-          coll[node.id] = node;
-          return coll;
-        },
-        {} as any
-      );
-
+      context.nodes = Nodes.index(context.nodes, nodes);
       return context;
     });
   };

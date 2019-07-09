@@ -52,28 +52,21 @@ function createNode(
     date: new Date(stats.mtime)
   };
 
-  // Process source
-  const sourceExts = path
-    .basename(file)
-    .split(".")
-    .slice(1);
-
   // Process target
-  let targetDirname = path.dirname(id);
-  if (targetDirname === ".") {
-    targetDirname = "";
+  let dirname = path.dirname(id);
+  if (dirname === ".") {
+    dirname = "";
   }
 
-  const [targetBasename, ...targetExts] = path.basename(id).split(".");
+  const [basename, ...exts] = path.basename(id).split(".");
 
   return Node.create({
     id,
     source: file,
-    extensions: sourceExts,
     target: {
-      dirname: targetDirname,
-      basename: targetBasename,
-      ext: targetExts[targetExts.length - 1]
+      dirname,
+      basename,
+      ext: exts[exts.length - 1]
     },
     contents: contents.toString(),
     ...props
