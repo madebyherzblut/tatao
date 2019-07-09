@@ -1,3 +1,1 @@
-declare module "@mdx-js/mdx" {
-  export default any;
-}
+declare module "@mdx-js/mdx";
