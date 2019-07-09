@@ -4,14 +4,18 @@ import { Plugin } from "./plugin";
 
 export interface BuilderOptions {
   cwd?: string;
+  locales?: string[];
 }
 
 export class Builder {
   _context: Context;
   _plugins: Plugin[] = [];
 
-  constructor(options: BuilderOptions = {}) {
-    this._context = new Context(options.cwd || process.cwd());
+  constructor(opts: BuilderOptions = {}) {
+    this._context = new Context({
+      cwd: opts.cwd || process.cwd(),
+      locales: opts.locales || []
+    });
   }
 
   use(plugin: Plugin) {

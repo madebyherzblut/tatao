@@ -23,7 +23,8 @@ export function source(inputDirectory: string, globs: string[]): Plugin {
               const id = file.replace(inputDirectory, "");
               log("Read file '%s'", id);
               return Promise.all([fs.readFile(file), stat(file)]).then(
-                ([contents, stats]) => createNode(id, file, contents, stats)
+                ([contents, stats]) =>
+                  createNode(context, id, file, contents, stats)
               );
             })
           )
@@ -43,6 +44,7 @@ export function source(inputDirectory: string, globs: string[]): Plugin {
 }
 
 function createNode(
+  context: Context,
   id: string,
   file: string,
   contents: Buffer,
@@ -58,11 +60,21 @@ function createNode(
     dirname = "";
   }
 
-  const [basename, ...exts] = path.basename(id).split(".");
+  let [basename, ...exts] = path.basename(id).split(".");
+  let locale;
+
+  exts = exts.reduce<string[]>((l, e) => {
+    if (context.locales.includes(e)) {
+      locale = e;
+      return l;
+    }
+    return l.concat(e);
+  }, []);
 
   return Node.create({
     id,
     source: file,
+    locale,
     target: {
       dirname,
       basename,

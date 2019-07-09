@@ -20,13 +20,14 @@ export function write(outputDir: string): Plugin {
 
       log("Write '%s' to '%s'", node.id, node.target);
 
-      const outputPath = path.join(
+      const segments: string[] = [
         outputDir,
+        node.locale,
         node.target.dirname,
         `${node.target.basename}.${node.target.ext}`
-      );
+      ].filter(Boolean);
 
-      return fs.outputFile(outputPath, node.contents);
+      return fs.outputFile(path.join(...segments), node.contents);
     });
 
     return Promise.all(writers).then(() => context);
