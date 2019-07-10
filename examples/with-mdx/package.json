@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@tatao/core": "^0.1.0",
+    "@tatao/plugin-frontmatter": "^0.1.0",
     "@tatao/plugin-mdx": "^0.1.0",
     "@tatao/plugin-react": "^0.1.0",
   }
