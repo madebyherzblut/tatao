@@ -11,12 +11,9 @@ const time = timer("source");
 
 export function source(inputDirectory: string, globs: string[]): Plugin {
   return function(context: Context) {
-    inputDirectory = path.join(context.cwd, inputDirectory);
-    globs = globs.map(glob => path.join(inputDirectory, glob));
-
     return time.auto(
       "read",
-      glob(globs)
+      glob(globs.map(g => path.join(context.cwd, inputDirectory, g)))
         .then(files =>
           Promise.all(
             files.map(file => {
